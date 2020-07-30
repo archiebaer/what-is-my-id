@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Head from "next/head";
+import axios from "axios";
 
 const Page = () => {
 	const [reverse, setReverse] = useState(false);
@@ -20,6 +21,15 @@ const Page = () => {
 				const tag = form.tag.startsWith("#") ? form.tag.substr(1) : form.tag;
 				if (tag.length !== 4) return setError("Tag must be 4 digits long");
 			}
+
+			axios.get(
+				`/api?${
+					reverse ?
+						`id=${encodeURIComponent(form.id)}` :
+						`name=${encodeURIComponent(form.name)}&tag=${encodeURIComponent(form.tag)}`}`
+			)
+				.then(({data}) => setAnswer(data))
+				.catch(() => setError("We couldn't find that user!"))
 		}
 	};
 
