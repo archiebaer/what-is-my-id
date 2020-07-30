@@ -39,7 +39,10 @@ const Page = () => {
 							{answer}
 						</div>
 					) : (
-						<div className="inputs">
+						<form className="inputs" onSubmit={e => {
+							e.preventDefault();
+							doTheThing();
+						}}>
 							{reverse ? (
 								<input
 									placeholder="00000000-0000-0000-0000-000000000000"
@@ -70,7 +73,7 @@ const Page = () => {
 									/>
 								</>
 							)}
-						</div>
+						</form>
 					)}
 
 					<div className="buttons">
