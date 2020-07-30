@@ -1,65 +1,150 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import {useState} from "react";
+import Head from "next/head";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const Page = () => {
+	const [reverse, setReverse] = useState(false);
+	const [answer, setAnswer] = useState();
+	const [error, setError] = useState();
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+	const doTheThing = () => {
+		if (answer) setAnswer();
+		else {
+			console.log("Doing the thing...");
+			setError("Attempting to do the thing resulted in an error...");
+		}
+	};
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+	return (
+		<>
+			<Head>
+				<title>What is my ID?</title>
+			</Head>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+			<div className="container">
+				<main>
+					<h1>What is my {reverse ? "name and tag" : "ID"}?</h1>
+					<p className="explain">Find the {reverse ? "name and tag" : "id"} of your Alles account from the {reverse ? "id" : "name and tag"}.</p>
+					
+					{answer ? (
+						<div className="answer">
+							{answer}
+						</div>
+					) : (
+						<div className="inputs">
+							{reverse ? (
+								<input placeholder="00000000-0000-0000-0000-000000000000" className="id" />
+							) : (
+								<>
+									<input placeholder="Archie Baer" className="name" />
+									<input placeholder="#0001" className="tag" />
+								</>
+							)}
+						</div>
+					)}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+					<div className="buttons">
+						<button onClick={doTheThing}>{answer ? "Do it again" : "Do the thing"}</button>
+						<button onClick={() => setReverse(!reverse)}>Find my {reverse ? "ID" : "name and tag"}</button>
+					</div>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+					{error ? <p className="error">{error}</p> : <></>}
+				</main>
+			</div>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+			<style jsx global>{`
+				html,
+				body,
+				body > div:first-child,
+				div#__next {
+					height: 100%;
+				}
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
-}
+				body {
+					margin: 0 20px;
+				}
+			`}</style>
+
+			<style jsx>{`
+				* {
+					font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+				}
+
+				.container {
+					display: flex;
+					flex-flow: column;
+					justify-content: center;
+					height: 100%;
+				}
+
+				main {
+					width: 400px;
+					max-width: 100%;
+					margin: 0 auto;
+					text-align: center;
+				}
+
+				h1 {
+					font-size: 50px;
+					margin: 0;
+				}
+
+				p.explain {
+					margin: 20px 0;
+				}
+
+				input, .answer, button {
+					border: solid 1px;
+					padding: 10px;
+					width: 100%;
+				}
+
+				.inputs {
+					display: flex;
+				}
+
+				input {
+					min-width: 0;
+					flex-shrink: 1;
+					text-align: center;
+					box-sizing: border-box;
+					height: 40px;
+				}
+
+				input:nth-child(2) {
+					margin-left: 10px;
+				}
+
+				.answer {
+					box-sizing: border-box;
+					height: 40px;
+					font-style: italic;
+				}
+
+				.buttons {
+					margin-top: 10px;
+				}
+
+				button {
+					display: block;
+					cursor: pointer;
+					background: #f0f0f0;
+				}
+
+				button:hover {
+					font-weight: bold;
+				}
+
+				button:nth-child(2) {
+					border-top: none;
+				}
+
+				.error {
+					font-style: italic;
+					color: #ff0000;
+				}
+			`}</style>
+		</>
+	);
+};
+
+export default Page;
