@@ -5,12 +5,21 @@ const Page = () => {
 	const [reverse, setReverse] = useState(false);
 	const [answer, setAnswer] = useState();
 	const [error, setError] = useState();
+	const [form, setForm] = useState({
+		name: "",
+		tag: "",
+		id: ""
+	});
 
 	const doTheThing = () => {
 		if (answer) setAnswer();
 		else {
-			console.log("Doing the thing...");
-			setError("Attempting to do the thing resulted in an error...");
+			if (reverse) {
+				if (form.id.length !== 36) return setError("ID must be 36 characters long")
+			} else {
+				const tag = form.tag.startsWith("#") ? form.tag.substr(1) : form.tag;
+				if (tag.length !== 4) return setError("Tag must be 4 digits long");
+			}
 		}
 	};
 
@@ -32,11 +41,33 @@ const Page = () => {
 					) : (
 						<div className="inputs">
 							{reverse ? (
-								<input placeholder="00000000-0000-0000-0000-000000000000" className="id" />
+								<input
+									placeholder="00000000-0000-0000-0000-000000000000"
+									key="id"
+									onInput={e => {
+										setError();
+										setForm({...form, id: e.target.value});
+									}}
+								/>
 							) : (
 								<>
-									<input placeholder="Archie Baer" className="name" />
-									<input placeholder="#0001" className="tag" />
+									<input
+										placeholder="Archie Baer"
+										key="name"
+										onInput={e => {
+											setError();
+											setForm({...form, name: e.target.value});
+										}}
+									/>
+									<input
+										placeholder="#0001"
+										key="tag"
+										maxLength="5"
+										onInput={e => {
+											setError();
+											setForm({...form, tag: e.target.value});
+										}}
+									/>
 								</>
 							)}
 						</div>
@@ -44,7 +75,12 @@ const Page = () => {
 
 					<div className="buttons">
 						<button onClick={doTheThing}>{answer ? "Do it again" : "Do the thing"}</button>
-						<button onClick={() => setReverse(!reverse)}>Find my {reverse ? "ID" : "name and tag"}</button>
+						<button onClick={() => {
+							setError();
+							setAnswer();
+							setForm({});
+							setReverse(!reverse)
+						}}>Find my {reverse ? "ID" : "name and tag"}</button>
 					</div>
 
 					{error ? <p className="error">{error}</p> : <></>}
