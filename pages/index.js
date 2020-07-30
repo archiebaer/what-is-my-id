@@ -33,7 +33,7 @@ const Page = () => {
 				`/api?${
 					reverse ?
 						`id=${encodeURIComponent(form.id)}` :
-						`name=${encodeURIComponent(form.name)}&tag=${encodeURIComponent(form.tag)}`}`
+						`name=${encodeURIComponent(form.name)}&tag=${encodeURIComponent(tag)}`}`
 			)
 				.then(({data}) => setAnswer(data.text))
 				.catch(() => setError("We couldn't find that user!"))
