@@ -21,20 +21,20 @@ const Page = () => {
 				id: ""
 			});
 		} else {
-			let url;
+			let params;
 			if (reverse) {
 				if (form.id.length !== 36) return setError("ID must be 36 characters long")
-				url = `id=${encodeURIComponent(form.id)}`;
+				params = `id=${encodeURIComponent(form.id)}`;
 			} else {
 				const tag = form.tag.startsWith("#") ? form.tag.substr(1) : form.tag;
 				if (tag.length !== 4) return setError("Tag must be 4 digits long");
-				url = `name=${encodeURIComponent(form.name)}&tag=${encodeURIComponent(tag)}`;
+				params = `name=${encodeURIComponent(form.name)}&tag=${encodeURIComponent(tag)}`;
 			}
 
 			setError();
-			axios.get(`/api/${url}`)
+			axios.get(`/api?${params}`)
 				.then(({data}) => setAnswer(data.text))
-				.catch(() => setError("We couldn't find that user!"))
+				.catch(() => setError("We couldn't find that user!"));
 		}
 	};
 
