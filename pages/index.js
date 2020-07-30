@@ -22,13 +22,14 @@ const Page = () => {
 				if (tag.length !== 4) return setError("Tag must be 4 digits long");
 			}
 
+			setError();
 			axios.get(
 				`/api?${
 					reverse ?
 						`id=${encodeURIComponent(form.id)}` :
 						`name=${encodeURIComponent(form.name)}&tag=${encodeURIComponent(form.tag)}`}`
 			)
-				.then(({data}) => setAnswer(data))
+				.then(({data}) => setAnswer(data.text))
 				.catch(() => setError("We couldn't find that user!"))
 		}
 	};
