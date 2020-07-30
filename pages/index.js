@@ -13,8 +13,14 @@ const Page = () => {
 	});
 
 	const doTheThing = () => {
-		if (answer) setAnswer();
-		else {
+		if (answer) {
+			setAnswer();
+			setForm({
+				name: "",
+				tag: "",
+				id: ""
+			});
+		} else {
 			if (reverse) {
 				if (form.id.length !== 36) return setError("ID must be 36 characters long")
 			} else {
@@ -92,7 +98,11 @@ const Page = () => {
 						<button onClick={() => {
 							setError();
 							setAnswer();
-							setForm({});
+							setForm({
+								name: "",
+								tag: "",
+								id: ""
+							});
 							setReverse(!reverse)
 						}}>Find my {reverse ? "ID" : "name and tag"}</button>
 					</div>
