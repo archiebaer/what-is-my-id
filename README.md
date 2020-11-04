@@ -3,5 +3,5 @@ This is a simple website that uses the Horizon API to tell you what your ID is w
 
 #### Better version
 There's a better version of this web app! You can find it [here](https://edazpotato.github.io/alles-web).
-It supports newer API features and is activly maintained. It also has a library that you can include in your web apps to get Alles User data yourself!
+It supports newer API features and is activly maintained. It also has a front end javascript library that you can include in your web apps to get Alles User data yourself!
 You can find the code & js library ([here](https://github.com/edazpotato/alles-web)).
