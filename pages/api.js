@@ -10,7 +10,7 @@ export default async (req, res) => {
             typeof req.query.tag === "string"
         ) {
             const user = (await axios.get(
-                `https://horizon.alles.cc/nametag?name=${encodeURIComponent(req.query.name)}&tag=${encodeURIComponent(req.query.tag)}`
+                `https://horizon.alles.cc/nametag/${encodeURIComponent(req.query.name)}/${encodeURIComponent(req.query.tag)}`
             )).data;
             res.json({text: user.id});
         } else res.status(400).json({err: "badRequest"});
